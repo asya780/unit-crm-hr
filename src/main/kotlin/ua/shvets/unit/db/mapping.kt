@@ -26,6 +26,10 @@ fun daoToModel(dao: EmployeeDAO) = Employee(
     dao.dismissalDate,
     dao.creationTime.toLocalDateTime(TimeZone.UTC),
     dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    daoToModel(dao.position),
+    daoToModel(dao.personalInformation),
+    daoToModel(dao.department),
+    daoToModel(dao.cabinet)
 )
 
 fun daoToModel(dao: CabinetDAO) = Cabinet(
@@ -67,4 +71,5 @@ fun daoToModel(dao: VacationDAO) = Vacation(
     dao.approved,
     dao.creationTime.toLocalDateTime(TimeZone.UTC),
     dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    daoToModel(dao.employee),
 )

@@ -15,6 +15,7 @@ object VacationTable : IntIdTable("Vacation") {
     val creationTime = timestamp("creation_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
     val lastUpdateTime =
         timestamp("last_update_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
+    val employee = reference("employee", EmployeeTable)
 }
 
 class VacationDAO(id: EntityID<Int>) : IntEntity(id) {
@@ -25,4 +26,5 @@ class VacationDAO(id: EntityID<Int>) : IntEntity(id) {
     val approved by VacationTable.approved
     val creationTime by VacationTable.creationTime
     val lastUpdateTime by VacationTable.lastUpdateTime
+    val employee by EmployeeDAO referencedOn VacationTable.employee
 }

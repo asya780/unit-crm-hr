@@ -6,6 +6,12 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import kotlinx.serialization.Serializable
 import kotlinx.coroutines.Dispatchers
 import org.jetbrains.exposed.sql.*
+import ua.shvets.unit.db.CabinetTable
+import ua.shvets.unit.db.DepartmentTable
+import ua.shvets.unit.db.EmployeeTable
+import ua.shvets.unit.db.PersonalInformationTable
+import ua.shvets.unit.db.PositionTable
+import ua.shvets.unit.db.VacationTable
 
 @Serializable
 data class ExposedUser(val name: String, val age: Int)
@@ -21,6 +27,12 @@ class UserService(private val database: Database) {
     init {
         transaction(database) {
             SchemaUtils.create(Users)
+            SchemaUtils.create(DepartmentTable)
+            SchemaUtils.create(PersonalInformationTable)
+            SchemaUtils.create(PositionTable)
+            SchemaUtils.create(CabinetTable)
+            SchemaUtils.create(EmployeeTable)
+            SchemaUtils.create(VacationTable)
         }
     }
 

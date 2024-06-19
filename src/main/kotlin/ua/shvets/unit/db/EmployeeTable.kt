@@ -37,4 +37,8 @@ class EmployeeDAO(id: EntityID<Int>) : IntEntity(id) {
     var dismissalDate by EmployeeTable.dismissalDate
     var creationTime by EmployeeTable.creationTime
     var lastUpdateTime by EmployeeTable.lastUpdateTime
+    val position by PositionDAO referencedOn EmployeeTable.position
+    val personalInformation by PersonalInformationDAO referencedOn EmployeeTable.personalInformation
+    val department by DepartmentDAO referencedOn EmployeeTable.department
+    val cabinet by CabinetDAO referencedOn EmployeeTable.cabinet
 }
