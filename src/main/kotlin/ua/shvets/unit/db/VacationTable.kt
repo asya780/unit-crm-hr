@@ -5,21 +5,24 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.kotlin.datetime.date
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
 
-object PositionTable : IntIdTable("Position") {
-    val name = varchar("name", 50)
-    val salary = integer("salary")
+object VacationTable : IntIdTable("Vacation") {
+    val start = date("start")
+    val end = date("end")
+    val approved = bool("approved")
     val creationTime = timestamp("creation_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
     val lastUpdateTime =
         timestamp("last_update_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
 }
 
-class PositionDAO(id: EntityID<Int>) : IntEntity(id) {
-    companion object : IntEntityClass<PositionDAO>(PositionTable)
+class VacationDAO(id: EntityID<Int>) : IntEntity(id) {
+    companion object : IntEntityClass<VacationDAO>(VacationTable)
 
-    val name by PositionTable.name
-    val salary by PositionTable.salary
-    val creationTime by PositionTable.creationTime
-    val lastUpdateTime by PositionTable.lastUpdateTime
+    val start by VacationTable.start
+    val end by VacationTable.end
+    val approved by VacationTable.approved
+    val creationTime by VacationTable.creationTime
+    val lastUpdateTime by VacationTable.lastUpdateTime
 }

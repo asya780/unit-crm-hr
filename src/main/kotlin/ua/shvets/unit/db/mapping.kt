@@ -8,7 +8,9 @@ import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransacti
 import ua.shvets.unit.domain.Cabinet
 import ua.shvets.unit.domain.Department
 import ua.shvets.unit.domain.Employee
+import ua.shvets.unit.domain.PersonalInformation
 import ua.shvets.unit.domain.Position
+import ua.shvets.unit.domain.Vacation
 
 suspend fun <T> suspendTransaction(block: Transaction.() -> T): T =
     newSuspendedTransaction(Dispatchers.IO, statement = block)
@@ -45,6 +47,24 @@ fun daoToModel(dao: PositionDAO) = Position(
 fun daoToModel(dao: DepartmentDAO) = Department(
     dao.id.value,
     dao.name,
+    dao.creationTime.toLocalDateTime(TimeZone.UTC),
+    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+)
+
+fun daoToModel(dao: PersonalInformationDAO) = PersonalInformation(
+    dao.id.value,
+    dao.registrationAddress,
+    dao.personalNumber,
+    dao.address,
+    dao.creationTime.toLocalDateTime(TimeZone.UTC),
+    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+)
+
+fun daoToModel(dao: VacationDAO) = Vacation(
+    dao.id.value,
+    dao.start,
+    dao.end,
+    dao.approved,
     dao.creationTime.toLocalDateTime(TimeZone.UTC),
     dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
 )

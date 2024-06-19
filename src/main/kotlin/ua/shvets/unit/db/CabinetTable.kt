@@ -2,6 +2,7 @@ package ua.shvets.unit.db
 
 import kotlinx.datetime.Instant
 import org.jetbrains.exposed.dao.IntEntity
+import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
@@ -15,6 +16,8 @@ object CabinetTable : IntIdTable("Cabinet") {
 }
 
 class CabinetDAO(id: EntityID<Int>): IntEntity(id) {
+    companion object : IntEntityClass<CabinetDAO>(CabinetTable)
+
     val name by CabinetTable.name
     val floor by CabinetTable.floor
     val creationTime by CabinetTable.creationTime

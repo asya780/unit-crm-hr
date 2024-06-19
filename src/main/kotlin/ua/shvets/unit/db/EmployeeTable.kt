@@ -19,6 +19,10 @@ object EmployeeTable : IntIdTable("Employee") {
     val creationTime = timestamp("creation_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
     val lastUpdateTime =
         timestamp("last_update_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
+    val position = reference("position_id", PositionTable)
+    val personalInformation = reference("personal_information_id", PersonalInformationTable)
+    val department = reference("department", DepartmentTable)
+    val cabinet = reference("cabinet", CabinetTable)
 }
 
 class EmployeeDAO(id: EntityID<Int>) : IntEntity(id) {
