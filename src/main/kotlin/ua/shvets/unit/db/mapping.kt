@@ -6,6 +6,7 @@ import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import ua.shvets.unit.domain.Cabinet
+import ua.shvets.unit.domain.Department
 import ua.shvets.unit.domain.Employee
 import ua.shvets.unit.domain.Position
 
@@ -37,6 +38,13 @@ fun daoToModel(dao: PositionDAO) = Position(
     dao.id.value,
     dao.name,
     dao.salary,
+    dao.creationTime.toLocalDateTime(TimeZone.UTC),
+    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+)
+
+fun daoToModel(dao: DepartmentDAO) = Department(
+    dao.id.value,
+    dao.name,
     dao.creationTime.toLocalDateTime(TimeZone.UTC),
     dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
 )
