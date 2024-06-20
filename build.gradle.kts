@@ -3,15 +3,23 @@ val logback_version: String by project
 val exposed_version: String by project
 val h2_version: String by project
 val sqlite_version: String by project
+val koin_version: String by project
 
 plugins {
     kotlin("jvm") version "2.0.0"
     id("io.ktor.plugin") version "2.3.11"
     id("org.jetbrains.kotlin.plugin.serialization") version "2.0.0"
+    idea
 }
 
 group = "ua.shvets"
 version = "0.0.1"
+
+idea {
+    module {
+        isDownloadJavadoc = true
+    }
+}
 
 application {
     mainClass.set("io.ktor.server.netty.EngineMain")
@@ -45,4 +53,7 @@ dependencies {
     testImplementation("io.ktor:ktor-server-tests-jvm")
     testImplementation("org.jetbrains.kotlin:kotlin-test-junit:$kotlin_version")
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.0")
+    implementation("io.insert-koin:koin-core:$koin_version")
+    implementation("io.insert-koin:koin-ktor:$koin_version")
+    implementation("io.insert-koin:koin-logger-slf4j:$koin_version")
 }
