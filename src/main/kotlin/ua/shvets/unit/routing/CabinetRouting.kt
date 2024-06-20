@@ -5,6 +5,7 @@ import io.ktor.server.application.call
 import io.ktor.server.request.receive
 import io.ktor.server.response.respond
 import io.ktor.server.routing.Routing
+import io.ktor.server.routing.delete
 import io.ktor.server.routing.get
 import io.ktor.server.routing.post
 import io.ktor.server.routing.route
@@ -22,6 +23,40 @@ fun Routing.cabinetRouting() {
         post {
             val cabinet = call.receive<Cabinet>()
             cabinetRepository.add(cabinet)
+            call.respond(HttpStatusCode.Created)
+        }
+        post("/{id}") {
+            val cabinetId = call.parameters["id"]?.toInt()
+            if (cabinetId == null) {
+                call.respond(HttpStatusCode.BadRequest)
+                return@post
+            }
+            val updatedCabinet = call.receive<Cabinet>()
+            cabinetRepository.update(updatedCabinet)
+        }
+        delete("/{id}") {
+            val cabinetId = call.parameters["id"]?.toInt()
+            val response = if (cabinetId != null) {
+                try {
+                    cabinetRepository.remove(cabinetId)
+                    HttpStatusCode.OK
+                } catch (e: Throwable) {
+                    HttpStatusCode.BadGateway
+                }
+            } else {
+                HttpStatusCode.BadRequest
+            }
+            call.respond(response)
+        }
+        get("/{id}") {
+            val cabinetId = call.parameters["id"]?.toInt()
+            val response = if (cabinetId != null) {
+                cabinetRepository.findById(cabinetId)
+                HttpStatusCode.OK
+            } else {
+                HttpStatusCode.BadRequest
+            }
+            call.respond(response)
         }
     }
 }

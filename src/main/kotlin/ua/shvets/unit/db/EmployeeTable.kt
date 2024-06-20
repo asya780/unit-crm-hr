@@ -1,6 +1,5 @@
 package ua.shvets.unit.db
 
-import kotlinx.datetime.Instant
 import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
@@ -8,8 +7,6 @@ import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.date
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
-import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
-import ua.shvets.unit.db.DepartmentTable.defaultExpression
 
 object EmployeeTable : IntIdTable("Employee") {
     val name = varchar("name", 50)
@@ -18,7 +15,7 @@ object EmployeeTable : IntIdTable("Employee") {
     val birthDate = date("birth_date")
     val multiplier = float("multiplier")
     val active = bool("active")
-    val dismissalDate = date("dismissal_date")
+    val dismissalDate = date("dismissal_date").nullable()
     val creationTime = datetime("creation_time").defaultExpression(CurrentDateTime)
     val lastUpdateTime = datetime("last_update_time").defaultExpression(CurrentDateTime)
     val position = reference("position_id", PositionTable)

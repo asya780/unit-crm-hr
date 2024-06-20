@@ -13,7 +13,7 @@ data class Employee(
     val birthDate: LocalDate,
     val multiplier: Float,
     val active: Boolean,
-    val dismissalDate: LocalDate,
+    val dismissalDate: LocalDate?,
     val creationTime: LocalDateTime,
     val lastUpdateTime: LocalDateTime,
     val position: Position,
