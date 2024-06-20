@@ -10,6 +10,12 @@ import io.ktor.server.response.*
 import io.ktor.server.routing.*
 import io.ktor.server.webjars.*
 import kotlinx.serialization.Serializable
+import ua.shvets.unit.routing.cabinetRouting
+import ua.shvets.unit.routing.departmentRouting
+import ua.shvets.unit.routing.employeeRouting
+import ua.shvets.unit.routing.personalInformationRouting
+import ua.shvets.unit.routing.positionRouting
+import ua.shvets.unit.routing.vacationRouting
 
 fun Application.configureRouting() {
     install(Webjars) {
@@ -17,6 +23,12 @@ fun Application.configureRouting() {
     }
     install(Resources)
     routing {
+        cabinetRouting()
+        departmentRouting()
+        employeeRouting()
+        personalInformationRouting()
+        positionRouting()
+        vacationRouting()
         get("/") {
             call.respondText("Hello World!")
         }

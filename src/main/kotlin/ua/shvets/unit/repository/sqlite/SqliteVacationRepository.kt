@@ -4,6 +4,8 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.update
+import ua.shvets.unit.db.EmployeeDAO
+import ua.shvets.unit.db.EmployeeTable
 import ua.shvets.unit.db.VacationDAO
 import ua.shvets.unit.db.VacationTable
 import ua.shvets.unit.db.daoToModel
@@ -34,7 +36,7 @@ class SqliteVacationRepository : VacationRepository {
             start = vacation.start
             end = vacation.end
             approved = vacation.approved
-//            employee = vacation.employee
+            employee = EmployeeDAO[vacation.employee.id]
         }
     }
 

@@ -4,9 +4,12 @@ import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.update
-import ua.shvets.unit.db.CabinetTable.floor
+import ua.shvets.unit.db.CabinetDAO
+import ua.shvets.unit.db.DepartmentDAO
 import ua.shvets.unit.db.EmployeeDAO
 import ua.shvets.unit.db.EmployeeTable
+import ua.shvets.unit.db.PersonalInformationDAO
+import ua.shvets.unit.db.PositionDAO
 import ua.shvets.unit.db.daoToModel
 import ua.shvets.unit.db.suspendTransaction
 import ua.shvets.unit.domain.Employee
@@ -39,10 +42,10 @@ class SqliteEmployeeRepository : EmployeeRepository {
             multiplier = employee.multiplier
             active = employee.active
             dismissalDate = employee.dismissalDate
-//            position = employee.position
-//            personalInformation = employee.personalInformation
-//            department = employee.department
-//            cabinet = employee.cabinet
+            position = PositionDAO[employee.position.id]
+            personalInformation = PersonalInformationDAO[employee.personalInformation.id]
+            department = DepartmentDAO[employee.department.id]
+            cabinet = CabinetDAO[employee.cabinet.id]
         }
     }
 
