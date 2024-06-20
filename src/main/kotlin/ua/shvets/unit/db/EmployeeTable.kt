@@ -5,8 +5,11 @@ import org.jetbrains.exposed.dao.IntEntity
 import org.jetbrains.exposed.dao.IntEntityClass
 import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
+import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.date
+import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 import org.jetbrains.exposed.sql.kotlin.datetime.timestamp
+import ua.shvets.unit.db.DepartmentTable.defaultExpression
 
 object EmployeeTable : IntIdTable("Employee") {
     val name = varchar("name", 50)
@@ -16,9 +19,8 @@ object EmployeeTable : IntIdTable("Employee") {
     val multiplier = float("multiplier")
     val active = bool("active")
     val dismissalDate = date("dismissal_date")
-    val creationTime = timestamp("creation_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
-    val lastUpdateTime =
-        timestamp("last_update_time").default(Instant.fromEpochMilliseconds(System.currentTimeMillis()))
+    val creationTime = datetime("creation_time").defaultExpression(CurrentDateTime)
+    val lastUpdateTime = datetime("last_update_time").defaultExpression(CurrentDateTime)
     val position = reference("position_id", PositionTable)
     val personalInformation = reference("personal_information_id", PersonalInformationTable)
     val department = reference("department", DepartmentTable)

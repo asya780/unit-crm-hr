@@ -1,8 +1,6 @@
 package ua.shvets.unit.db
 
 import kotlinx.coroutines.Dispatchers
-import kotlinx.datetime.TimeZone
-import kotlinx.datetime.toLocalDateTime
 import org.jetbrains.exposed.sql.Transaction
 import org.jetbrains.exposed.sql.transactions.experimental.newSuspendedTransaction
 import ua.shvets.unit.domain.Cabinet
@@ -24,8 +22,8 @@ fun daoToModel(dao: EmployeeDAO) = Employee(
     dao.multiplier,
     dao.active,
     dao.dismissalDate,
-    dao.creationTime.toLocalDateTime(TimeZone.UTC),
-    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    dao.creationTime,
+    dao.lastUpdateTime,
     daoToModel(dao.position),
     daoToModel(dao.personalInformation),
     daoToModel(dao.department),
@@ -36,23 +34,23 @@ fun daoToModel(dao: CabinetDAO) = Cabinet(
     dao.id.value,
     dao.name,
     dao.floor,
-    dao.creationTime.toLocalDateTime(TimeZone.UTC),
-    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    dao.creationTime,
+    dao.lastUpdateTime,
 )
 
 fun daoToModel(dao: PositionDAO) = Position(
     dao.id.value,
     dao.name,
     dao.salary,
-    dao.creationTime.toLocalDateTime(TimeZone.UTC),
-    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    dao.creationTime,
+    dao.lastUpdateTime,
 )
 
 fun daoToModel(dao: DepartmentDAO) = Department(
     dao.id.value,
     dao.name,
-    dao.creationTime.toLocalDateTime(TimeZone.UTC),
-    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    dao.creationTime,
+    dao.lastUpdateTime,
 )
 
 fun daoToModel(dao: PersonalInformationDAO) = PersonalInformation(
@@ -60,8 +58,8 @@ fun daoToModel(dao: PersonalInformationDAO) = PersonalInformation(
     dao.registrationAddress,
     dao.personalNumber,
     dao.address,
-    dao.creationTime.toLocalDateTime(TimeZone.UTC),
-    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    dao.creationTime,
+    dao.lastUpdateTime,
 )
 
 fun daoToModel(dao: VacationDAO) = Vacation(
@@ -69,7 +67,7 @@ fun daoToModel(dao: VacationDAO) = Vacation(
     dao.start,
     dao.end,
     dao.approved,
-    dao.creationTime.toLocalDateTime(TimeZone.UTC),
-    dao.lastUpdateTime.toLocalDateTime(TimeZone.UTC),
+    dao.creationTime,
+    dao.lastUpdateTime,
     daoToModel(dao.employee),
 )
