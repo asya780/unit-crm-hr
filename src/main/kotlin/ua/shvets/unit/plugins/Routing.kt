@@ -1,14 +1,14 @@
 package ua.shvets.unit.plugins
 
-import io.ktor.http.*
-import io.ktor.resources.*
-import io.ktor.server.application.*
-import io.ktor.server.http.content.*
-import io.ktor.server.resources.*
+import io.ktor.resources.Resource
+import io.ktor.server.application.Application
+import io.ktor.server.application.call
+import io.ktor.server.application.install
+import io.ktor.server.http.content.staticFiles
 import io.ktor.server.resources.Resources
-import io.ktor.server.response.*
-import io.ktor.server.routing.*
-import io.ktor.server.webjars.*
+import io.ktor.server.resources.get
+import io.ktor.server.response.respond
+import io.ktor.server.routing.routing
 import kotlinx.serialization.Serializable
 import ua.shvets.unit.routing.cabinetRouting
 import ua.shvets.unit.routing.departmentRouting
@@ -16,11 +16,9 @@ import ua.shvets.unit.routing.employeeRouting
 import ua.shvets.unit.routing.personalInformationRouting
 import ua.shvets.unit.routing.positionRouting
 import ua.shvets.unit.routing.vacationRouting
+import java.io.File
 
 fun Application.configureRouting() {
-    install(Webjars) {
-        path = "/webjars" //defaults to /webjars
-    }
     install(Resources)
     routing {
         cabinetRouting()
@@ -29,16 +27,6 @@ fun Application.configureRouting() {
         personalInformationRouting()
         positionRouting()
         vacationRouting()
-        get("/") {
-            call.respondText("Hello World!")
-        }
-        get("/webjars") {
-            call.respondText("<script src='/webjars/jquery/jquery.js'></script>", ContentType.Text.Html)
-        }
-        // Static plugin. Try to access `/static/index.html`
-        static("/static") {
-            resources("static")
-        }
         get<Articles> { article ->
             // Get all articles ...
             call.respond("List of articles sorted starting from ${article.sort}")
