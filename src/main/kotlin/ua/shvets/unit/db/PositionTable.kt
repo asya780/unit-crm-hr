@@ -6,9 +6,10 @@ import org.jetbrains.exposed.dao.id.EntityID
 import org.jetbrains.exposed.dao.id.IntIdTable
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
+import ua.shvets.unit.db.DepartmentTable.uniqueIndex
 
 object PositionTable : IntIdTable("Position") {
-    val name = varchar("name", 50)
+    val name = varchar("name", 50).uniqueIndex()
     val salary = integer("salary")
     val creationTime = datetime("creation_time").defaultExpression(CurrentDateTime)
     val lastUpdateTime = datetime("last_update_time").defaultExpression(CurrentDateTime)

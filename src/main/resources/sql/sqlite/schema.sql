@@ -1,13 +1,13 @@
 CREATE TABLE Cabinet (
   id               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name             varchar(50) NOT NULL,
+  name             varchar(50) NOT NULL UNIQUE,
   floor            integer(2) NOT NULL,
   creation_time    timestamp,
   last_update_time timestamp);
 
 CREATE TABLE Department (
   id               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name             varchar(50) NOT NULL,
+  name             varchar(50) NOT NULL UNIQUE,
   creation_time    timestamp NOT NULL,
   last_update_time timestamp NOT NULL);
 
@@ -49,7 +49,7 @@ CREATE TABLE Personal_information (
 
 CREATE TABLE Position (
   id               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name             integer(10) NOT NULL,
+  name             integer(10) NOT NULL UNIQUE,
   salary           integer(10) NOT NULL,
   creation_time    timestamp NOT NULL,
   last_update_time timestamp NOT NULL);

@@ -1,8 +1,8 @@
 <template>
   <v-app>
     <v-navigation-drawer v-model="drawer" permanent class="bd-deep-blue">
-      <v-img :width="300" aspect-ratio="16/9" cover src="https://cdn.vuetifyjs.com/images/parallax/material.jpg">
-      </v-img>
+        <v-img :src="logo" height="128" class="align-center ma-2">
+        </v-img>
       <v-divider></v-divider>
       <v-list-item link title="Main" @click="onNavigationLink('/main')">
       </v-list-item>
@@ -31,7 +31,7 @@
     <v-app-bar>
       <v-app-bar-nav-icon @click="drawer = !drawer"></v-app-bar-nav-icon>
 
-      <v-app-bar-title>Unit</v-app-bar-title>
+      <v-app-bar-title>UnIT Control Resource Management System</v-app-bar-title>
     </v-app-bar>
     <v-main>
       <RouterView />
@@ -42,6 +42,7 @@
 <script setup>
 import { ref } from 'vue'
 import router from './router';
+import logo from '@/assets/logo.png';
 
 const drawer = ref(null);
 

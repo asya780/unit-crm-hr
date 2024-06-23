@@ -1,6 +1,6 @@
 CREATE TABLE Cabinet (
   id               SERIAL NOT NULL,
-  name             varchar(50) NOT NULL,
+  name             varchar(50) NOT NULL UNIQUE,
   floor            int4 NOT NULL,
   creation_time    timestamp,
   last_update_time timestamp,
@@ -8,7 +8,7 @@ CREATE TABLE Cabinet (
 
 CREATE TABLE Department (
   id               SERIAL NOT NULL,
-  name             varchar(50) NOT NULL,
+  name             varchar(50) NOT NULL UNIQUE,
   creation_time    timestamp NOT NULL,
   last_update_time timestamp NOT NULL,
   PRIMARY KEY (id));
@@ -47,7 +47,7 @@ CREATE TABLE Personal_information (
 
 CREATE TABLE Position (
   id               SERIAL NOT NULL,
-  name             int4 NOT NULL,
+  name             int4 NOT NULL UNIQUE,
   salary           int4 NOT NULL,
   creation_time    timestamp NOT NULL,
   last_update_time timestamp NOT NULL,

@@ -8,14 +8,13 @@ import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.kotlin.datetime.datetime
 
 object DepartmentTable : IntIdTable("Department") {
-    val name = varchar("name", 50)
+    val name = varchar("name", 50).uniqueIndex()
     val creationTime = datetime("creation_time").defaultExpression(CurrentDateTime)
     val lastUpdateTime = datetime("last_update_time").defaultExpression(CurrentDateTime)
 }
 
 class DepartmentDAO(id: EntityID<Int>) : IntEntity(id) {
     companion object : IntEntityClass<DepartmentDAO>(DepartmentTable)
-
 
     var name by DepartmentTable.name
     var creationTime by DepartmentTable.creationTime

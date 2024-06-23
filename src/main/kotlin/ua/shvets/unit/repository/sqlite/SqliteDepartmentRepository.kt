@@ -2,6 +2,7 @@ package ua.shvets.unit.repository.sqlite
 
 import org.jetbrains.exposed.sql.SqlExpressionBuilder.eq
 import org.jetbrains.exposed.sql.deleteWhere
+import org.jetbrains.exposed.sql.insert
 import org.jetbrains.exposed.sql.kotlin.datetime.CurrentDateTime
 import org.jetbrains.exposed.sql.update
 import ua.shvets.unit.db.CabinetTable.floor
@@ -33,6 +34,8 @@ class SqliteDepartmentRepository : DepartmentRepository {
     override suspend fun add(department: Department): Unit = suspendTransaction {
         DepartmentDAO.new {
             name = department.name
+            creationTime = department.creationTime
+            lastUpdateTime = department.lastUpdateTime
         }
     }
 
