@@ -33,6 +33,7 @@ fun Routing.employeeRouting() {
             }
             val updatedEmployee = call.receive<Employee>()
             employeeRepository.update(updatedEmployee)
+            call.respond(HttpStatusCode.OK)
         }
         delete("/{id}") {
             val employeeId = call.parameters["id"]?.toInt()

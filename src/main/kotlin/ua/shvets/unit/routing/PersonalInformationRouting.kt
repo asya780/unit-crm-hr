@@ -33,6 +33,7 @@ fun Routing.personalInformationRouting() {
             }
             val updatedPersonalInformation = call.receive<PersonalInformation>()
             personalInformationRepository.update(updatedPersonalInformation)
+            call.respond(HttpStatusCode.OK)
         }
         delete("/{id}") {
             val personalInformationId = call.parameters["id"]?.toInt()

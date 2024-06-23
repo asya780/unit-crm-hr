@@ -11,7 +11,7 @@
           <v-spacer></v-spacer>
           <v-dialog v-model="addDialog" max-width="500">
             <template v-slot:activator="{ props }">
-              <v-btn icon="mdi-plus" variant="text" color="green" @click="openDialog">
+              <v-btn icon="mdi-plus" variant="text" color="green" @click="openAddDialog">
               </v-btn>
             </template>
             <v-card>
@@ -28,7 +28,7 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="close">
+                <v-btn color="blue-darken-1" variant="text" @click="closeAdd">
                   Cancel
                 </v-btn>
                 <v-btn color="blue-darken-1" variant="text" @click="onAdd">
@@ -42,10 +42,34 @@
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
         </v-btn>
-        <v-btn icon="mdi-pencil" variant="text" color="blue" @click="onEdit(item)">
+        <v-btn icon="mdi-pencil" variant="text" color="blue" @click="openEditDialog(item)">
         </v-btn>
       </template>
     </v-data-table>
+    <v-dialog v-model="editDialog" max-width="500">
+      <v-card>
+        <v-card-title>
+          <span class="text-h5">Edit department</span>
+        </v-card-title>
+        <v-card-text>
+          <v-container>
+            <v-row>
+              <v-text-field label="Name" variant="outlined" v-model="editDepartment.name" clearable>
+              </v-text-field>
+            </v-row>
+          </v-container>
+        </v-card-text>
+        <v-card-actions>
+          <v-spacer></v-spacer>
+          <v-btn color="blue-darken-1" variant="text" @click="closeEdit">
+            Cancel
+          </v-btn>
+          <v-btn color="blue-darken-1" variant="text" @click="onEdit(editDepartment)">
+            Save
+          </v-btn>
+        </v-card-actions>
+      </v-card>
+    </v-dialog>
     <v-snackbar v-model="snackbar" timeout="3000" color="primary" rounded="pill">
       {{ snackbarText }}
       <template v-slot:actions>
@@ -69,8 +93,12 @@ const loading = ref(true)
 const totalItems = ref(0)
 const snackbarText = ref("")
 const snackbar = ref(false)
+
 const newDepartment = ref(new Department(null, "", null, null))
+const editDepartment = ref(null)
+
 const addDialog = ref(false)
+const editDialog = ref(false)
 const headers = ref([
   { title: 'ID', value: 'id', sortable: true },
   { title: 'Name', value: 'name', sortable: true },
@@ -112,18 +140,20 @@ function onDelete(item) {
 }
 
 function onEdit(department) {
-  axios.post(`/department/${item.id}`, department)
+  department.lastUpdateTime = new Date().toISOString().slice(0, 23)
+  axios.post(`/department/${department.id}`, department)
     .then((res) => {
       snackbarText.value = "Changes saved successfully"
       snackbar.value = true
-      console.info(`Item#${item.id} deleted successfully.`)
+      console.info(`Item#${department.id} deleted successfully.`)
     })
     .catch((err) => {
       snackbarText.value = "Error while saving changes"
       snackbar.value = true
-      console.error(`Error while deleting ${item.id}: ` + err.toString());
+      console.error(`Error while deleting ${department.id}: ` + err.toString());
     })
     .finally(() => {
+      editDialog.value = false
       updateTable()
     })
 }
@@ -149,13 +179,23 @@ function onAdd() {
     })
 }
 
-function openDialog() {
+function openAddDialog() {
   addDialog.value = true
 }
 
-function close() {
+function openEditDialog(item) {
+  editDepartment.value = Object.assign({}, item)
+  editDialog.value = true
+}
+
+function closeAdd() { 
   addDialog.value = false
   newDepartment.value = new Department(null, null, null, null)
+}
+
+function closeEdit() {
+  editDialog.value = false
+  editDepartment.value = new Department(null, null, null, null)
 }
 
 onMounted(() => {

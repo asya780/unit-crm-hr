@@ -33,6 +33,7 @@ fun Routing.vacationRouting() {
             }
             val updatedVacation = call.receive<Vacation>()
             vacationRepository.update(updatedVacation)
+            call.respond(HttpStatusCode.OK)
         }
         delete("/{id}") {
             val vacationId = call.parameters["id"]?.toInt()

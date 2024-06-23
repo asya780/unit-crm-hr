@@ -33,6 +33,7 @@ fun Routing.cabinetRouting() {
             }
             val updatedCabinet = call.receive<Cabinet>()
             cabinetRepository.update(updatedCabinet)
+            call.respond(HttpStatusCode.OK)
         }
         delete("/{id}") {
             val cabinetId = call.parameters["id"]?.toInt()

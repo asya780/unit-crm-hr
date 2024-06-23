@@ -33,6 +33,7 @@ fun Routing.departmentRouting() {
             }
             val updatedDepartment = call.receive<Department>()
             departmentRepository.update(updatedDepartment)
+            call.respond(HttpStatusCode.OK)
         }
         delete("/{id}") {
             val departmentId = call.parameters["id"]?.toInt()

@@ -35,6 +35,7 @@ fun Routing.positionRouting() {
             }
             val updatedPosition = call.receive<Position>()
             positionRepository.update(updatedPosition)
+            call.respond(HttpStatusCode.OK)
         }
         delete("/{id}") {
             val positionId = call.parameters["id"]?.toInt()
