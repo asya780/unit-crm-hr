@@ -145,7 +145,7 @@ function onEdit(department) {
     .then((res) => {
       snackbarText.value = "Changes saved successfully"
       snackbar.value = true
-      console.info(`Item#${department.id} deleted successfully.`)
+      console.info(`Item#${department.id} edited successfully.`)
     })
     .catch((err) => {
       snackbarText.value = "Error while saving changes"
@@ -188,7 +188,7 @@ function openEditDialog(item) {
   editDialog.value = true
 }
 
-function closeAdd() { 
+function closeAdd() {
   addDialog.value = false
   newDepartment.value = new Department(null, null, null, null)
 }

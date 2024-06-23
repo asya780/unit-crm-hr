@@ -153,7 +153,7 @@ function onEdit(cabinet) {
     .then((res) => {
       snackbarText.value = "Changes saved successfully"
       snackbar.value = true
-      console.info(`Item#${cabinet.id} deleted successfully.`)
+      console.info(`Item#${cabinet.id} edited successfully.`)
     })
     .catch((err) => {
       snackbarText.value = "Error while saving changes"
