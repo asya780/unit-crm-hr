@@ -1,10 +1,11 @@
 <template>
-  <v-card title="Position" flat>
+  <v-card title="Position" flat color="primary-darken-1">
     <template v-slot:text>
       <v-text-field v-model="search" label="Search" prepend-inner-icon="mdi-magnify" variant="outlined" hide-details
         single-line></v-text-field>
     </template>
-    <v-data-table :headers="headers" :items="positions" :items-length="totalItems" :loading="loading" :search="search">
+    <v-data-table :headers="headers" :items="positions" :items-length="totalItems" :loading="loading" :search="search"
+      density="compact">
       <template v-slot:top>
         <v-toolbar>
           <v-spacer></v-spacer>
@@ -24,7 +25,7 @@
                     </v-text-field>
                   </v-row>
                   <v-row>
-                    <v-text-field label="Salary" variant="outlined" v-model="newPosition  .salary" clearable>
+                    <v-text-field label="Salary" variant="outlined" v-model="newPosition.salary" clearable>
                     </v-text-field>
                   </v-row>
                 </v-container>
