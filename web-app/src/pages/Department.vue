@@ -22,7 +22,8 @@
                 <v-form v-model="valid">
                   <v-container>
                     <v-row>
-                      <v-text-field label="Name" variant="outlined" v-model="newDepartment.name" :rules="nameRules" required clearable>
+                      <v-text-field label="Name" variant="outlined" v-model="newDepartment.name" :rules="nameRules"
+                        required clearable>
                       </v-text-field>
                     </v-row>
                   </v-container>
@@ -41,6 +42,12 @@
           </v-dialog>
         </v-toolbar>
       </template>
+      <template v-slot:item.creationTime="{ item }">
+        {{  new Date(item.creationTime).toLocaleString() }}
+      </template>
+      <template v-slot:item.lastUpdateTime="{ item }">
+        {{  new Date(item.creationTime).toLocaleString() }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
         </v-btn>
@@ -56,7 +63,8 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-text-field label="Name" variant="outlined" v-model="editDepartment.name" :rules="nameRules" required clearable>
+              <v-text-field label="Name" variant="outlined" v-model="editDepartment.name" :rules="nameRules" required
+                clearable>
               </v-text-field>
             </v-row>
           </v-container>

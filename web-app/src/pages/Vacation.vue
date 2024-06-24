@@ -61,6 +61,12 @@
           </v-dialog>
         </v-toolbar>
       </template>
+      <template v-slot:item.creationTime="{ item }">
+        {{  new Date(item.creationTime).toLocaleString() }}
+      </template>
+      <template v-slot:item.lastUpdateTime="{ item }">
+        {{  new Date(item.creationTime).toLocaleString() }}
+      </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
         </v-btn>
