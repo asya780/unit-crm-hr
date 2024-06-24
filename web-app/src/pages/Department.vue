@@ -56,7 +56,7 @@
         <v-card-text>
           <v-container>
             <v-row>
-              <v-text-field label="Name" variant="outlined" v-model="editDepartment.name" clearable>
+              <v-text-field label="Name" variant="outlined" v-model="editDepartment.name" :rules="nameRules" required clearable>
               </v-text-field>
             </v-row>
           </v-container>
@@ -66,7 +66,7 @@
           <v-btn color="blue-darken-1" variant="tonal" @click="closeEdit">
             Cancel
           </v-btn>
-          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editDepartment)">
+          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editDepartment)" :disabled="!valid">
             Save
           </v-btn>
         </v-card-actions>
