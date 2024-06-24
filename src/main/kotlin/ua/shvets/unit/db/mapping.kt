@@ -25,7 +25,7 @@ fun daoToModel(dao: EmployeeDAO) = Employee(
     dao.creationTime,
     dao.lastUpdateTime,
     daoToModel(dao.position),
-    daoToModel(dao.personalInformation),
+    dao.personalInformation?.let { daoToModel(it) },
     daoToModel(dao.department),
     daoToModel(dao.cabinet)
 )

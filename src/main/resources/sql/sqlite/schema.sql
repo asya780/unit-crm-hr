@@ -23,7 +23,7 @@ CREATE TABLE Employee (
   creation_time          timestamp NOT NULL,
   last_update_time       timestamp NOT NULL,
   Positionid             integer(10) NOT NULL,
-  Personal_informationid integer(10) NOT NULL,
+  Personal_informationid integer(10) NULL,
   Departmentid           integer(10) NOT NULL,
   Cabinetid              integer(10) NOT NULL,
   FOREIGN KEY(Cabinetid) REFERENCES Cabinet(id),

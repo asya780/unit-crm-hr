@@ -19,7 +19,7 @@ object EmployeeTable : IntIdTable("Employee") {
     val creationTime = datetime("creation_time").defaultExpression(CurrentDateTime)
     val lastUpdateTime = datetime("last_update_time").defaultExpression(CurrentDateTime)
     val position = reference("position_id", PositionTable)
-    val personalInformation = reference("personal_information_id", PersonalInformationTable)
+    val personalInformation = reference("personal_information_id", PersonalInformationTable).nullable()
     val department = reference("department", DepartmentTable)
     val cabinet = reference("cabinet", CabinetTable)
 }
@@ -37,7 +37,7 @@ class EmployeeDAO(id: EntityID<Int>) : IntEntity(id) {
     var creationTime by EmployeeTable.creationTime
     var lastUpdateTime by EmployeeTable.lastUpdateTime
     var position by PositionDAO referencedOn EmployeeTable.position
-    var personalInformation by PersonalInformationDAO referencedOn EmployeeTable.personalInformation
+    var personalInformation by PersonalInformationDAO optionalReferencedOn EmployeeTable.personalInformation
     var department by DepartmentDAO referencedOn EmployeeTable.department
     var cabinet by CabinetDAO referencedOn EmployeeTable.cabinet
 }

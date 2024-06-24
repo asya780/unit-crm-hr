@@ -17,7 +17,7 @@ data class Employee(
     val creationTime: LocalDateTime,
     val lastUpdateTime: LocalDateTime,
     val position: Position,
-    val personalInformation: PersonalInformation,
+    val personalInformation: PersonalInformation?,
     val department: Department,
     val cabinet: Cabinet
 )

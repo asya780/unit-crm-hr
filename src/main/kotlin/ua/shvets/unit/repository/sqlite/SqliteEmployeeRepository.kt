@@ -43,7 +43,9 @@ class SqliteEmployeeRepository : EmployeeRepository {
             active = employee.active
             dismissalDate = employee.dismissalDate
             position = PositionDAO[employee.position.id]
-            personalInformation = PersonalInformationDAO[employee.personalInformation.id]
+            employee.personalInformation?.let {
+                personalInformation = PersonalInformationDAO[it.id]
+            }
             department = DepartmentDAO[employee.department.id]
             cabinet = CabinetDAO[employee.cabinet.id]
         }

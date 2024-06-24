@@ -25,7 +25,7 @@ CREATE TABLE Employee (
   creation_time          timestamp NOT NULL,
   last_update_time       timestamp NOT NULL,
   Positionid             int4 NOT NULL,
-  Personal_informationid int4 NOT NULL,
+  Personal_informationid int4 NULL,
   Departmentid           int4 NOT NULL,
   Cabinetid              int4 NOT NULL,
   PRIMARY KEY (id));

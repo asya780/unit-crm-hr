@@ -223,6 +223,7 @@ function onAdd() {
       snackbarText.value = "New vacation created"
       snackbar.value = true
       console.info(`Created new vacation.`)
+      addDialog.value = false
     })
     .catch((err) => {
       snackbarText.value = "Error while creating new vacation"
@@ -230,7 +231,6 @@ function onAdd() {
       console.error(`Error while creating new vacation` + err.toString());
     })
     .finally(() => {
-      addDialog.value = false
       updateTable()
     })
 
