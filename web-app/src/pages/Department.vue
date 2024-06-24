@@ -4,8 +4,8 @@
       <v-text-field v-model="search" label="Search" prepend-inner-icon="mdi-magnify" variant="outlined" hide-details
         single-line></v-text-field>
     </template>
-    <v-data-table :headers="headers" :items="departments" :items-length="totalItems" :loading="loading"
-      :search="search" density="compact">
+    <v-data-table :headers="headers" :items="departments" :items-length="totalItems" :loading="loading" :search="search"
+      density="compact">
       <template v-slot:top>
         <v-toolbar>
           <v-spacer></v-spacer>
@@ -19,19 +19,21 @@
                 <span class="text-h5">New department</span>
               </v-card-title>
               <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-text-field label="Name" variant="outlined" v-model="newDepartment.name" clearable>
-                    </v-text-field>
-                  </v-row>
-                </v-container>
+                <v-form v-model="valid">
+                  <v-container>
+                    <v-row>
+                      <v-text-field label="Name" variant="outlined" v-model="newDepartment.name" :rules="nameRules" required clearable>
+                      </v-text-field>
+                    </v-row>
+                  </v-container>
+                </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="closeAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="closeAdd">
                   Cancel
                 </v-btn>
-                <v-btn color="blue-darken-1" variant="text" @click="onAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="onAdd" :disabled="!valid">
                   Save
                 </v-btn>
               </v-card-actions>
@@ -61,10 +63,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="closeEdit">
+          <v-btn color="blue-darken-1" variant="tonal" @click="closeEdit">
             Cancel
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="onEdit(editDepartment)">
+          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editDepartment)">
             Save
           </v-btn>
         </v-card-actions>
@@ -99,6 +101,23 @@ const editDepartment = ref(null)
 
 const addDialog = ref(false)
 const editDialog = ref(false)
+
+const valid = ref(true)
+const nameRules = [
+  value => {
+    if (value)
+      return true;
+
+    return 'Name is required.'
+  },
+  value => {
+    if (value.length <= 50)
+      return true
+
+    return 'Name should be less than 50 characters.'
+  }
+]
+
 const headers = ref([
   { title: 'ID', value: 'id', sortable: true },
   { title: 'Name', value: 'name', sortable: true },
