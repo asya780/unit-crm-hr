@@ -63,9 +63,6 @@ const clock = useCurrentTime();
 function onNavigationLink(route) {
   router.push(route)
 }
-
-
-
 </script>
 
 
@@ -92,7 +89,7 @@ export default {
       {
         name: "Department",
         route: "/department",
-        icon: "mdi-comment"
+        icon: "mdi-graph"
       },
       {
         name: "Position",
