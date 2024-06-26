@@ -19,23 +19,25 @@
                 <span class="text-h5">New position</span>
               </v-card-title>
               <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-text-field label="Name" variant="outlined" v-model="newPosition.name" clearable>
-                    </v-text-field>
-                  </v-row>
-                  <v-row>
-                    <v-text-field label="Salary" variant="outlined" v-model="newPosition.salary" clearable>
-                    </v-text-field>
-                  </v-row>
-                </v-container>
+                <v-form v-model="valid">
+                  <v-container>
+                    <v-row>
+                      <v-text-field label="Name" variant="outlined" v-model="newPosition.name" clearable :rules="nameRules">
+                      </v-text-field>
+                    </v-row>
+                    <v-row>
+                      <v-text-field label="Salary" variant="outlined" v-model="newPosition.salary" clearable :rules="salaryRules">
+                      </v-text-field>
+                    </v-row>
+                  </v-container>
+                </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
                 <v-btn color="blue-darken-1" variant="tonal" @click="closeAdd">
                   Cancel
                 </v-btn>
-                <v-btn color="blue-darken-1" variant="tonal" @click="onAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="onAdd" :disabled="!valid">
                   Save
                 </v-btn>
               </v-card-actions>
@@ -44,10 +46,10 @@
         </v-toolbar>
       </template>
       <template v-slot:item.creationTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
       </template>
       <template v-slot:item.lastUpdateTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
@@ -62,23 +64,25 @@
           <span class="text-h5">Edit position</span>
         </v-card-title>
         <v-card-text>
-          <v-container>
-            <v-row>
-              <v-text-field label="Name" variant="outlined" v-model="editPosition.name" clearable>
-              </v-text-field>
-            </v-row>
-            <v-row>
-              <v-text-field label="Salary" variant="outlined" v-model="editPosition.salary" clearable>
-              </v-text-field>
-            </v-row>
-          </v-container>
+          <v-form v-model="valid">
+            <v-container>
+              <v-row>
+                <v-text-field label="Name" variant="outlined" v-model="editPosition.name" clearable :rules="nameRules">
+                </v-text-field>
+              </v-row>
+              <v-row>
+                <v-text-field label="Salary" variant="outlined" v-model="editPosition.salary" clearable :rules="salaryRules">
+                </v-text-field>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
           <v-btn color="blue-darken-1" variant="tonal" @click="closeEdit">
             Cancel
           </v-btn>
-          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editPosition)">
+          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editPosition)" :disabled="!valid">
             Save
           </v-btn>
         </v-card-actions>
@@ -122,6 +126,37 @@ const headers = ref([
   { title: 'Actions', value: "actions" }
 ])
 
+
+const valid = ref(false)
+const nameRules = [
+  value => {
+    if (value)
+      return true;
+
+    return 'Name is required.'
+  },
+  value => {
+    if (value.length <= 50)
+      return true
+
+    return 'Name should be less than 50 characters.'
+  }
+]
+const salaryRules = [
+  value => {
+    if (value)
+      return true
+
+    return 'Floor is required'
+  },
+  value => {
+    if (Number(value))
+      return true;
+
+    return 'Floor should be a number'
+  },
+]
+
 function updateTable() {
   loading.value = true
   axios.get('/position')
@@ -155,6 +190,7 @@ function onDelete(item) {
 }
 
 function onEdit(position) {
+  if (!valid.value) return
   position.lastUpdateTime = new Date().toISOString().slice(0, 23)
   axios.post(`/position/${position.id}`, position)
     .then((res) => {
@@ -174,6 +210,7 @@ function onEdit(position) {
 }
 
 function onAdd() {
+  if (!valid.value) return
   newPosition.value.id = -1
   newPosition.value.creationTime = new Date().toISOString().slice(0, 23)
   newPosition.value.lastUpdateTime = new Date().toISOString().slice(0, 23)
