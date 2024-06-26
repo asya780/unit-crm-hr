@@ -19,23 +19,27 @@ addDialog<template>
                 <span class="text-h5">New cabinet</span>
               </v-card-title>
               <v-card-text>
-                <v-container>
-                  <v-row>
-                    <v-text-field label="Name" variant="outlined" v-model="newCabinet.name" clearable>
-                    </v-text-field>
-                  </v-row>
-                  <v-row>
-                    <v-text-field label="Floor" variant="outlined" v-model="newCabinet.floor" clearable>
-                    </v-text-field>
-                  </v-row>
-                </v-container>
+                <v-form v-model="valid">
+                  <v-container>
+                    <v-row>
+                      <v-text-field label="Name" variant="outlined" v-model="newCabinet.name" clearable
+                        :rules="nameRules">
+                      </v-text-field>
+                    </v-row>
+                    <v-row>
+                      <v-text-field label="Floor" variant="outlined" v-model="newCabinet.floor" clearable
+                        :rules="floorRules">
+                      </v-text-field>
+                    </v-row>
+                  </v-container>
+                </v-form>
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="closeAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="closeAdd">
                   Cancel
                 </v-btn>
-                <v-btn color="blue-darken-1" variant="text" @click="onAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="onAdd" :disabled="!valid">
                   Save
                 </v-btn>
               </v-card-actions>
@@ -44,10 +48,10 @@ addDialog<template>
         </v-toolbar>
       </template>
       <template v-slot:item.creationTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
       </template>
       <template v-slot:item.lastUpdateTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
@@ -62,23 +66,25 @@ addDialog<template>
           <span class="text-h5">Edit cabinet</span>
         </v-card-title>
         <v-card-text>
-          <v-container>
-            <v-row>
-              <v-text-field label="Name" variant="outlined" v-model="editCabinet.name" clearable>
-              </v-text-field>
-            </v-row>
-            <v-row>
-              <v-text-field label="Floor" variant="outlined" v-model="newCabinet.floor" clearable>
-              </v-text-field>
-            </v-row>
-          </v-container>
+          <v-form v-model="valid">
+            <v-container>
+              <v-row>
+                <v-text-field label="Name" variant="outlined" v-model="editCabinet.name" clearable :rules="nameRules">
+                </v-text-field>
+              </v-row>
+              <v-row>
+                <v-text-field label="Floor" variant="outlined" v-model="editCabinet.floor" clearable :rules="floorRules">
+                </v-text-field>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="closeEdit">
+          <v-btn color="blue-darken-1" variant="tonal" @click="closeEdit">
             Cancel
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="onEdit(editCabinet)">
+          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editCabinet)" :disabled="!valid">
             Save
           </v-btn>
         </v-card-actions>
@@ -122,6 +128,36 @@ const headers = ref([
   { title: 'Actions', value: "actions" }
 ])
 
+const valid = ref(false)
+const nameRules = [
+  value => {
+    if (value)
+      return true;
+
+    return 'Name is required.'
+  },
+  value => {
+    if (value.length <= 50)
+      return true
+
+    return 'Name should be less than 50 characters.'
+  }
+]
+const floorRules = [
+  value => {
+    if (value)
+      return true
+
+    return 'Floor is required'
+  },
+  value => {
+    if (Number(value))
+      return true;
+
+    return 'Floor should be a number'
+  },
+]
+
 function updateTable() {
   loading.value = true
   axios.get('/cabinet')
@@ -155,6 +191,7 @@ function onDelete(item) {
 }
 
 function onEdit(cabinet) {
+  if (!valid.value) return
   cabinet.lastUpdateTime = new Date().toISOString().slice(0, 23)
   axios.post(`/cabinet/${cabinet.id}`, cabinet)
     .then((res) => {
@@ -174,6 +211,7 @@ function onEdit(cabinet) {
 }
 
 function onAdd() {
+  if (!valid.value) return
   newCabinet.value.id = -1
   newCabinet.value.creationTime = new Date().toISOString().slice(0, 23)
   newCabinet.value.lastUpdateTime = new Date().toISOString().slice(0, 23)

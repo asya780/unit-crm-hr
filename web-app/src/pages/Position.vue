@@ -32,10 +32,10 @@
               </v-card-text>
               <v-card-actions>
                 <v-spacer></v-spacer>
-                <v-btn color="blue-darken-1" variant="text" @click="closeAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="closeAdd">
                   Cancel
                 </v-btn>
-                <v-btn color="blue-darken-1" variant="text" @click="onAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="onAdd">
                   Save
                 </v-btn>
               </v-card-actions>
@@ -75,10 +75,10 @@
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
-          <v-btn color="blue-darken-1" variant="text" @click="closeEdit">
+          <v-btn color="blue-darken-1" variant="tonal" @click="closeEdit">
             Cancel
           </v-btn>
-          <v-btn color="blue-darken-1" variant="text" @click="onEdit(editPosition)">
+          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editPosition)">
             Save
           </v-btn>
         </v-card-actions>
