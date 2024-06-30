@@ -69,7 +69,7 @@ addDialog<template>
           <v-form v-model="valid">
             <v-container>
               <v-row>
-                <v-text-field label="Name" variant="outlined" v-model="editCabinet.name" clearable :rules="nameRules">
+                <v-text-field label="Name" variant="outlined" v-model="editCabinet.name" clearable :rules="stringRules('Name', 50)">
                 </v-text-field>
               </v-row>
               <v-row>
@@ -103,6 +103,7 @@ addDialog<template>
 
 <script setup>
 import { Cabinet } from '@/model';
+import { stringRules } from '@/util/validators';
 import { inject, onMounted, ref } from 'vue';
 
 const axios = inject('axios');
@@ -129,20 +130,6 @@ const headers = ref([
 ])
 
 const valid = ref(false)
-const nameRules = [
-  value => {
-    if (value)
-      return true;
-
-    return 'Name is required.'
-  },
-  value => {
-    if (value.length <= 50)
-      return true
-
-    return 'Name should be less than 50 characters.'
-  }
-]
 const floorRules = [
   value => {
     if (value)

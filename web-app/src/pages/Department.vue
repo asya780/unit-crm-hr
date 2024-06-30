@@ -64,7 +64,7 @@
           <v-form v-model="valid">
             <v-container>
               <v-row>
-                <v-text-field label="Name" variant="outlined" v-model="editDepartment.name" :rules="nameRules" required
+                <v-text-field label="Name" variant="outlined" v-model="editDepartment.name" :rules="stringRules('Name', 50)" required
                   clearable>
                 </v-text-field>
               </v-row>
@@ -95,6 +95,7 @@
 
 <script setup>
 import { Department } from '@/model';
+import { stringRules } from '@/util/validators';
 import { inject, onMounted, ref } from 'vue';
 
 const axios = inject('axios');
@@ -113,20 +114,6 @@ const addDialog = ref(false)
 const editDialog = ref(false)
 
 const valid = ref(false)
-const nameRules = [
-  value => {
-    if (value)
-      return true;
-
-    return 'Name is required.'
-  },
-  value => {
-    if (value.length <= 50)
-      return true
-
-    return 'Name should be less than 50 characters.'
-  }
-]
 
 const headers = ref([
   { title: 'ID', value: 'id', sortable: true },

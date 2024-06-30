@@ -102,10 +102,10 @@
         </v-toolbar>
       </template>
       <template v-slot:item.creationTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
       </template>
       <template v-slot:item.lastUpdateTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
@@ -120,72 +120,75 @@
           <span class="text-h5">Edit employee</span>
         </v-card-title>
         <v-card-text>
-          <v-container>
-            <v-row>
-              <v-text-field label="Name" variant="outlined" v-model="editEmployee.name" clearable>
-              </v-text-field>
-            </v-row>
-            <v-row>
-              <v-text-field label="Surname" variant="outlined" v-model="editEmployee.surname" clearable>
-              </v-text-field>
-            </v-row>
-            <v-row>
-              <v-text-field label="Middle Name" variant="outlined" v-model="editEmployee.middleName" clearable>
-              </v-text-field>
-            </v-row>
-            <v-row>
-              <span class="text-h5">Birth Date</span>
-              <v-date-picker show-adjacent-months v-model="editEmployee.birthDate" color="primary"></v-date-picker>
-            </v-row>
-            <v-row>
-              <v-text-field label="Salary Multiplier" variant="outlined" v-model="editEmployee.multiplier" clearable>
-              </v-text-field>
-            </v-row>
-            <v-row>
-              <v-checkbox-btn label="Active" variant="outlined" v-model="editEmployee.active"
-                color="primary"></v-checkbox-btn>
-            </v-row>
-            <v-row>
-              <span class="text-h5">Dismissal Date</span>
-              <v-date-picker show-adjacent-months v-model="editEmployee.dismissalDate" color="primary"></v-date-picker>
-            </v-row>
-            <v-row>
-              <v-select label="Position" variant="outlined" v-model="editEmployee.position" :items="positions"
-                return-object>
-                <template v-slot:item="{ props, item }">
-                  <v-list-item v-bind="props" :title="`${item.raw.name} (${item.raw.salary})`">
-                  </v-list-item>
-                </template>
-                <template v-slot:selection="{ item }">
-                  {{ item.raw.name }} ({{ item.raw.salary }})
-                </template>
-              </v-select>
-            </v-row>
-            <v-row>
-              <v-select label="Department" variant="outlined" v-model="editEmployee.department" :items="departments"
-                return-object>
-                <template v-slot:item="{ props, item }">
-                  <v-list-item v-bind="props" :title="`${item.raw.name}`">
-                  </v-list-item>
-                </template>
-                <template v-slot:selection="{ item }">
-                  {{ item.raw.name }}
-                </template>
-              </v-select>
-            </v-row>
-            <v-row>
-              <v-select label="Cabinet" variant="outlined" v-model="editEmployee.cabinet" :items="cabinets"
-                return-object>
-                <template v-slot:item="{ props, item }">
-                  <v-list-item v-bind="props" :title="`${item.raw.name}`">
-                  </v-list-item>
-                </template>
-                <template v-slot:selection="{ item }">
-                  {{ item.raw.name }}
-                </template>
-              </v-select>
-            </v-row>
-          </v-container>
+          <v-form v-model="valid">
+            <v-container>
+              <v-row>
+                <v-text-field label="Name" variant="outlined" v-model="editEmployee.name" clearable :rules="stringRules('Name', 50)">
+                </v-text-field>
+              </v-row>
+              <v-row>
+                <v-text-field label="Surname" variant="outlined" v-model="editEmployee.surname" clearable :rules="stringRules('Surname', 50)">
+                </v-text-field>
+              </v-row>
+              <v-row>
+                <v-text-field label="Middle Name" variant="outlined" v-model="editEmployee.middleName" clearable :rules="middleNameRules">
+                </v-text-field>
+              </v-row>
+              <v-row>
+                <span class="text-h5">Birth Date</span>
+                <v-date-picker show-adjacent-months v-model="editEmployee.birthDate" color="primary"></v-date-picker>
+              </v-row>
+              <v-row>
+                <v-text-field label="Salary Multiplier" variant="outlined" v-model="editEmployee.multiplier" clearable>
+                </v-text-field>
+              </v-row>
+              <v-row>
+                <v-checkbox-btn label="Active" variant="outlined" v-model="editEmployee.active"
+                  color="primary"></v-checkbox-btn>
+              </v-row>
+              <v-row>
+                <span class="text-h5">Dismissal Date</span>
+                <v-date-picker show-adjacent-months v-model="editEmployee.dismissalDate"
+                  color="primary"></v-date-picker>
+              </v-row>
+              <v-row>
+                <v-select label="Position" variant="outlined" v-model="editEmployee.position" :items="positions"
+                  return-object>
+                  <template v-slot:item="{ props, item }">
+                    <v-list-item v-bind="props" :title="`${item.raw.name} (${item.raw.salary})`">
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    {{ item.raw.name }} ({{ item.raw.salary }})
+                  </template>
+                </v-select>
+              </v-row>
+              <v-row>
+                <v-select label="Department" variant="outlined" v-model="editEmployee.department" :items="departments"
+                  return-object>
+                  <template v-slot:item="{ props, item }">
+                    <v-list-item v-bind="props" :title="`${item.raw.name}`">
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    {{ item.raw.name }}
+                  </template>
+                </v-select>
+              </v-row>
+              <v-row>
+                <v-select label="Cabinet" variant="outlined" v-model="editEmployee.cabinet" :items="cabinets"
+                  return-object>
+                  <template v-slot:item="{ props, item }">
+                    <v-list-item v-bind="props" :title="`${item.raw.name}`">
+                    </v-list-item>
+                  </template>
+                  <template v-slot:selection="{ item }">
+                    {{ item.raw.name }}
+                  </template>
+                </v-select>
+              </v-row>
+            </v-container>
+          </v-form>
         </v-card-text>
         <v-card-actions>
           <v-spacer></v-spacer>
@@ -211,6 +214,7 @@
 
 <script setup>
 import { Employee } from '@/model';
+import { stringRules } from '@/util/validators';
 import { inject, onMounted, ref } from 'vue';
 
 const axios = inject('axios');
@@ -244,6 +248,57 @@ const headers = ref([
 const departments = ref([])
 const cabinets = ref([])
 const positions = ref([])
+
+const valid = ref(false)
+const nameRules = [
+  value => {
+    if (value)
+      return true;
+
+    return 'Name, surname is required.'
+  },
+  value => {
+    if (value.length <= 50)
+      return true
+
+    return 'Name, surname be less than 50 characters.'
+  }
+]
+const middleNameRules = [
+  value => {
+    if (value)
+      return true;
+
+    return 'Middle name is required.'
+  },
+  value => {
+    if (value.length <= 255)
+      return true
+
+    return 'Middle name should be less than 255 characters.'
+  }
+]
+const multiplierRules = [
+  value => {
+    if (value)
+      return true
+
+    return 'Salary multiplier is required.'
+  },
+  value => {
+    if (Number(value))
+      return true;
+
+    return 'Salary multiplier should be a number.'
+  },
+  value => {
+    var num = Number(value)
+    if (num > 0)
+      return true;
+
+    return 'Salary multiplier should be > 0.'
+  },
+]
 
 function updateTable() {
   loading.value = true

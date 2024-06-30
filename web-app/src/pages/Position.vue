@@ -147,13 +147,13 @@ const salaryRules = [
     if (value)
       return true
 
-    return 'Floor is required'
+    return 'Salary is required'
   },
   value => {
     if (Number(value))
       return true;
 
-    return 'Floor should be a number'
+    return 'Salary should be a number'
   },
 ]
 
