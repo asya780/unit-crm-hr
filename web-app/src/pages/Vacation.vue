@@ -4,7 +4,8 @@
       <v-text-field v-model="search" label="Search" prepend-inner-icon="mdi-magnify" variant="outlined" hide-details
         single-line></v-text-field>
     </template>
-    <v-data-table :headers="headers" :items="vacations" :items-length="totalItems" :loading="loading" :search="search" density="compact">
+    <v-data-table :headers="headers" :items="vacations" :items-length="totalItems" :loading="loading" :search="search"
+      density="compact">
       <template v-slot:top>
         <v-toolbar>
           <v-spacer></v-spacer>
@@ -62,10 +63,16 @@
         </v-toolbar>
       </template>
       <template v-slot:item.creationTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
       </template>
       <template v-slot:item.lastUpdateTime="{ item }">
-        {{  new Date(item.creationTime).toLocaleString() }}
+        {{ new Date(item.creationTime).toLocaleString() }}
+      </template>
+      <template v-slot:item.approved="{ item }">
+        <v-icon v-if="item.approved" icon="mdi-check" color="green">
+        </v-icon>
+        <v-icon v-else icon="mdi-close" color="red">
+        </v-icon>
       </template>
       <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
@@ -96,7 +103,8 @@
             <v-row>
               <v-col>
                 <span class="text-h5">Start</span>
-                <v-date-picker show-adjacent-months v-model="editVacation.start" color="primary" @update:model-value=""></v-date-picker>
+                <v-date-picker show-adjacent-months v-model="editVacation.start" color="primary"
+                  @update:model-value=""></v-date-picker>
               </v-col>
               <v-col>
                 <span class="text-h5">End</span>
@@ -151,7 +159,8 @@ const addDialog = ref(false)
 const editDialog = ref(false)
 const headers = ref([
   { title: 'ID', key: 'id', sortable: true },
-  { title: 'Employee', key: 'employee.name', sortable: true },
+  { title: 'Employee Surname', key: 'employee.surname', sortable: true },
+  { title: 'Employee Name', key: 'employee.name', sortable: true },
   { title: 'Start', key: 'start', sortable: true },
   { title: 'End', key: 'end', sortable: true },
   { title: 'Approved', key: 'approved', sortable: true },
@@ -282,7 +291,7 @@ function closeAdd() {
 
 function closeEdit() {
   editDialog.value = false
-  editVacation.value = new Vacation(null, null, null, null,null, null, null)
+  editVacation.value = new Vacation(null, null, null, null, null, null, null)
 }
 
 onMounted(() => {

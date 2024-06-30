@@ -22,7 +22,7 @@
                 <v-form v-model="valid">
                   <v-container>
                     <v-row>
-                      <v-text-field label="Name" variant="outlined" v-model="newDepartment.name" :rules="nameRules"
+                      <v-text-field label="Name" variant="outlined" v-model="newDepartment.name" :rules="stringRules('Name', 50)"
                         required clearable>
                       </v-text-field>
                     </v-row>

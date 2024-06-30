@@ -333,6 +333,7 @@ function onDelete(item) {
 }
 
 function onEdit(employee) {
+  if (!valid.value) return
   var employeeToSend = Object.assign({}, employee)
   employeeToSend.birthDate = newEmployee.value.birthDate.toISOString().slice(0, 10)
   if (employeeToSend.dismissalDate instanceof Date)
@@ -356,6 +357,7 @@ function onEdit(employee) {
 }
 
 function onAdd() {
+  if (!valid.value) return
   var employeeToSend = Object.assign({}, newEmployee.value)
   employeeToSend.id = -1
   employeeToSend.creationTime = new Date().toISOString().slice(0, 23)
