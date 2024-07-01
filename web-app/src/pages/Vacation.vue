@@ -74,7 +74,7 @@
         <v-icon v-else icon="mdi-close" color="red">
         </v-icon>
       </template>
-      <template slot:item.actions="{ item }">
+      <template v-slot:item.actions="{ item }">
         <v-btn icon="mdi-delete" variant="text" color="red" @click="onDelete(item)">
         </v-btn>
         <v-btn icon="mdi-pencil" variant="text" color="blue" @click="openEditDialog(item)">
