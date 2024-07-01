@@ -30,12 +30,6 @@ CREATE TABLE Employee (
   Cabinetid              int4 NOT NULL,
   PRIMARY KEY (id));
 
-CREATE TABLE Employee_Manager (
-  manager  int4 NOT NULL,
-  employee int4 NOT NULL,
-  PRIMARY KEY (manager,
-  employee));
-
 CREATE TABLE Personal_information (
   id                   SERIAL NOT NULL,
   registration_address varchar(255),
@@ -47,7 +41,7 @@ CREATE TABLE Personal_information (
 
 CREATE TABLE Position (
   id               SERIAL NOT NULL,
-  name             int4 NOT NULL UNIQUE,
+  name             varchar(50) NOT NULL UNIQUE,
   salary           int4 NOT NULL,
   creation_time    timestamp NOT NULL,
   last_update_time timestamp NOT NULL,

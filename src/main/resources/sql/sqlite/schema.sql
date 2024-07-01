@@ -31,14 +31,6 @@ CREATE TABLE Employee (
   FOREIGN KEY(Personal_informationid) REFERENCES Personal_information(id),
   FOREIGN KEY(Positionid) REFERENCES Position(id));
 
-CREATE TABLE Employee_Manager (
-  manager  integer(10) NOT NULL,
-  employee integer(10) NOT NULL,
-  PRIMARY KEY (manager,
-  employee),
-  FOREIGN KEY(employee) REFERENCES Employee(id),
-  FOREIGN KEY(manager) REFERENCES Employee(id));
-
 CREATE TABLE Personal_information (
   id                   INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
   registration_address varchar(255),
@@ -49,7 +41,7 @@ CREATE TABLE Personal_information (
 
 CREATE TABLE Position (
   id               INTEGER NOT NULL PRIMARY KEY AUTOINCREMENT,
-  name             integer(10) NOT NULL UNIQUE,
+  name             VARCHAR(50) NOT NULL UNIQUE,
   salary           integer(10) NOT NULL,
   creation_time    timestamp NOT NULL,
   last_update_time timestamp NOT NULL);
