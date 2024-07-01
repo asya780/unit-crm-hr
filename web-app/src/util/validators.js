@@ -36,3 +36,14 @@ export function stringRules(fieldName, length) {
     }
   ]
 }
+
+export function selectionRules(fieldName) {
+  return [
+    value => {
+      if (value)
+        return true
+
+      return `${fieldName} is required.`
+    }
+  ]
+}

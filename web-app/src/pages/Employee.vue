@@ -19,18 +19,21 @@
                 <span class="text-h5">New employee</span>
               </v-card-title>
               <v-card-text>
-                <v-form>
+                <v-form v-model="valid" @submit.prevent>
                   <v-container>
                     <v-row>
-                      <v-text-field label="Name" variant="outlined" v-model="newEmployee.name" clearable>
+                      <v-text-field label="Name" variant="outlined" v-model="newEmployee.name" clearable
+                        :rules="stringRules('Name', 50)">
                       </v-text-field>
                     </v-row>
                     <v-row>
-                      <v-text-field label="Surname" variant="outlined" v-model="newEmployee.surname" clearable>
+                      <v-text-field label="Surname" variant="outlined" v-model="newEmployee.surname" clearable
+                        :rules="stringRules('Surname', 50)">
                       </v-text-field>
                     </v-row>
                     <v-row>
-                      <v-text-field label="Middle Name" variant="outlined" v-model="newEmployee.middleName" clearable>
+                      <v-text-field label="Middle Name" variant="outlined" v-model="newEmployee.middleName" clearable
+                        :rules="stringRules('Middle Name', 255)">
                       </v-text-field>
                     </v-row>
                     <v-row>
@@ -40,7 +43,7 @@
                     </v-row>
                     <v-row>
                       <v-text-field label="Salary Multiplier" variant="outlined" v-model="newEmployee.multiplier"
-                        clearable>
+                        clearable :rules="multiplierRules">
                       </v-text-field>
                     </v-row>
                     <v-row>
@@ -54,7 +57,7 @@
                     </v-row>
                     <v-row>
                       <v-select label="Position" variant="outlined" v-model="newEmployee.position" :items="positions"
-                        return-object>
+                        return-object :rules="selectionRules('Position')">
                         <template v-slot:item="{ props, item }">
                           <v-list-item v-bind="props" :title="`${item.raw.name} (${item.raw.salary})`">
                           </v-list-item>
@@ -66,7 +69,7 @@
                     </v-row>
                     <v-row>
                       <v-select label="Department" variant="outlined" v-model="newEmployee.department"
-                        :items="departments" return-object>
+                        :items="departments" return-object :rules="selectionRules('Departament')">
                         <template v-slot:item="{ props, item }">
                           <v-list-item v-bind="props" :title="`${item.raw.name}`">
                           </v-list-item>
@@ -78,7 +81,7 @@
                     </v-row>
                     <v-row>
                       <v-select label="Cabinet" variant="outlined" v-model="newEmployee.cabinet" :items="cabinets"
-                        return-object>
+                        return-object :rules="selectionRules('Cabinet')">
                         <template v-slot:item="{ props, item }">
                           <v-list-item v-bind="props" :title="`${item.raw.name}`">
                           </v-list-item>
@@ -96,7 +99,7 @@
                 <v-btn color="blue-darken-1" variant="tonal" @click="closeAdd">
                   Cancel
                 </v-btn>
-                <v-btn color="blue-darken-1" variant="tonal" @click="onAdd">
+                <v-btn color="blue-darken-1" variant="tonal" @click="onAdd" :disabled="!valid">
                   Save
                 </v-btn>
               </v-card-actions>
@@ -137,7 +140,7 @@
               </v-row>
               <v-row>
                 <v-text-field label="Middle Name" variant="outlined" v-model="editEmployee.middleName" clearable
-                  :rules="middleNameRules">
+                  :rules="stringRules('Middle Name', 255)">
                 </v-text-field>
               </v-row>
               <v-row>
@@ -159,7 +162,7 @@
               </v-row>
               <v-row>
                 <v-select label="Position" variant="outlined" v-model="editEmployee.position" :items="positions"
-                  return-object>
+                  return-object :rules="selectionRules('Position')">
                   <template v-slot:item="{ props, item }">
                     <v-list-item v-bind="props" :title="`${item.raw.name} (${item.raw.salary})`">
                     </v-list-item>
@@ -171,7 +174,7 @@
               </v-row>
               <v-row>
                 <v-select label="Department" variant="outlined" v-model="editEmployee.department" :items="departments"
-                  return-object>
+                  return-object :rules="selectionRules('Department')">
                   <template v-slot:item="{ props, item }">
                     <v-list-item v-bind="props" :title="`${item.raw.name}`">
                     </v-list-item>
@@ -183,7 +186,7 @@
               </v-row>
               <v-row>
                 <v-select label="Cabinet" variant="outlined" v-model="editEmployee.cabinet" :items="cabinets"
-                  return-object>
+                  return-object :rules="selectionRules('Cabinet')">
                   <template v-slot:item="{ props, item }">
                     <v-list-item v-bind="props" :title="`${item.raw.name}`">
                     </v-list-item>
@@ -201,7 +204,7 @@
           <v-btn color="blue-darken-1" variant="tonal" @click="closeEdit">
             Cancel
           </v-btn>
-          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editEmployee)">
+          <v-btn color="blue-darken-1" variant="tonal" @click="onEdit(editEmployee)" :disabled="!valid">
             Save
           </v-btn>
         </v-card-actions>
@@ -220,7 +223,7 @@
 
 <script setup>
 import { Employee } from '@/model';
-import { stringRules } from '@/util/validators';
+import { selectionRules, stringRules } from '@/util/validators';
 import { inject, onMounted, ref } from 'vue';
 
 const axios = inject('axios');
@@ -256,20 +259,6 @@ const cabinets = ref([])
 const positions = ref([])
 
 const valid = ref(false)
-const nameRules = [
-  value => {
-    if (value)
-      return true;
-
-    return 'Name, surname is required.'
-  },
-  value => {
-    if (value.length <= 50)
-      return true
-
-    return 'Name, surname be less than 50 characters.'
-  }
-]
 const middleNameRules = [
   value => {
     if (value)

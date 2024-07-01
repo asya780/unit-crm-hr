@@ -4,8 +4,6 @@
       <v-img :src="logo" height="128" class="align-center ma-2">
       </v-img>
       <v-divider></v-divider>
-      <v-list-item link title="Main" prepend-icon="mdi-home" @click="onNavigationLink('/main')">
-      </v-list-item>
       <v-list v-model:opened="openedTables">
         <v-list-group value="Tables" >
         <template v-slot:activator="{ props }">

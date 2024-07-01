@@ -49,7 +49,6 @@ export class Employee {
     this.department = department;
     this.cabinet = cabinet;
   }
-
 }
 
 export class PersonalInformation {
@@ -61,8 +60,6 @@ export class PersonalInformation {
     this.creationTime = creationTime;
     this.lastUpdateTime = lastUpdateTime;
   }
-
-
 }
 
 export class Position {

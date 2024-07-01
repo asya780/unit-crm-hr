@@ -7,7 +7,6 @@
 
 // Composables
 import { createRouter, createWebHistory } from 'vue-router/auto'
-import Main from '@/pages/Main.vue'
 import Position from '@/pages/Position.vue'
 import Employee from '@/pages/Employee.vue'
 import Vacation from '@/pages/Vacation.vue'
@@ -21,9 +20,9 @@ const router = createRouter({
     {
       path: '/',
       name: "main",
-      component: Main,
+      component: Employee,
       meta: {
-        title: "Main Page",
+        title: "Employee",
       }
     },
     {
