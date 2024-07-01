@@ -19,7 +19,7 @@
                 <span class="text-h5">New position</span>
               </v-card-title>
               <v-card-text>
-                <v-form v-model="valid">
+                <v-form v-model="valid" @submit.prevent>
                   <v-container>
                     <v-row>
                       <v-text-field label="Name" variant="outlined" v-model="newPosition.name" clearable :rules="nameRules">
@@ -64,7 +64,7 @@
           <span class="text-h5">Edit position</span>
         </v-card-title>
         <v-card-text>
-          <v-form v-model="valid">
+          <v-form v-model="valid" @submit.prevent>
             <v-container>
               <v-row>
                 <v-text-field label="Name" variant="outlined" v-model="editPosition.name" clearable :rules="nameRules">

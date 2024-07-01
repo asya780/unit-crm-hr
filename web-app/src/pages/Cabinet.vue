@@ -19,7 +19,7 @@ addDialog<template>
                 <span class="text-h5">New cabinet</span>
               </v-card-title>
               <v-card-text>
-                <v-form v-model="valid">
+                <v-form v-model="valid" @submit.prevent>
                   <v-container>
                     <v-row>
                       <v-text-field label="Name" variant="outlined" v-model="newCabinet.name" clearable
@@ -66,7 +66,7 @@ addDialog<template>
           <span class="text-h5">Edit cabinet</span>
         </v-card-title>
         <v-card-text>
-          <v-form v-model="valid">
+          <v-form v-model="valid" @submit.prevent>
             <v-container>
               <v-row>
                 <v-text-field label="Name" variant="outlined" v-model="editCabinet.name" clearable :rules="stringRules('Name', 50)">
